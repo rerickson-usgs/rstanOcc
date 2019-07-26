@@ -10,24 +10,29 @@ Currently, several Stan models exist.
 Most wrapper functions have not yet been written. 
 
 
-- [ ] Finish writing R wrapper, including placing more code inside R functions and writing examples 
- - [ ] `USFWS_UMR_eDNA.R` (need to move code inside function)
- - [ ] `occupancy.stan`
- - [ ] `eDNAoccupancy.stan`
- - [ ] `occupancyBernoulli.stan`
- - [ ] `occupancy_bernoulli.stan`
- - [x] `lm.stan`
- - [ ] `occupancy_mu.stan`
- - [x] `logistic_stan.stan`
- - [ ] `occupancy_mu_binomial.stan`
- - [x] `logistic_target_stan.stan`
-   
- 
-- [ ] Write test functions (while doing above)
-- [ ] Create plotting functions 
-- [ ] Upload example datasets 
-- [ ] Move tutorial into Vignette
-- [ ] Update this file 
+- [   ] Finish writing R wrapper, including placing more code inside R functions and writing examples 
+ - [   ] `USFWS_UMR_eDNA.R` (need to move code inside function)
+ - [   ] `occupancy.stan`
+ - [   ] `eDNAoccupancy.stan`
+ - [   ] `occupancyBernoulli.stan`
+ - [   ] `occupancy_bernoulli.stan`
+ - [ x ] `lm.stan`
+ - [   ] `occupancy_mu.stan`
+ - [ x ] `logistic_stan.stan`
+ - [   ] `occupancy_mu_binomial.stan`
+ - [ x ] `logistic_target_stan.stan`
+- [   ] Write test functions (while doing above)
+- [   ] Create plotting functions 
+- [   ] Upload example datasets 
+- [   ] Move tutorial into Vignette
+- [   ] Update this file 
+
+My plan of attack:
+
+1. Start working through tutorial files and moveing them over here.
+2. Write unit testing while doing this.
+3. Do this in order because this will be easiest.
+4. Convert existing tutorials into vignettes for this project. 
 
 ## Contact
 
