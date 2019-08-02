@@ -12,15 +12,15 @@ Most wrapper functions have not yet been written.
 
 - [   ] Finish writing R wrapper, including placing more code inside R functions and writing examples 
  - [   ] `USFWS_UMR_eDNA.R` (need to move code inside function)
- - [   ] `occupancy.stan`
- - [   ] `eDNAoccupancy.stan`
+ - [   ] `occupancy.stan` 
+ - [   ] `eDNAoccupancy.stan` (need to move code inside function)
  - [   ] `occupancyBernoulli.stan`
- - [   ] `occupancy_bernoulli.stan`
- - [ x ] `lm.stan`
+ - [   ] `occupancy_bernoullihg.stan`
+ - [ x ] `lm.stan` need test function 
  - [   ] `occupancy_mu.stan`
- - [ x ] `logistic_stan.stan`
+ - [ x ] `logistic_stan.stan` need test function 
  - [   ] `occupancy_mu_binomial.stan`
- - [ x ] `logistic_target_stan.stan`
+ - [ x ] `logistic_target_stan.stan` need test function 
 - [   ] Write test functions (while doing above)
 - [   ] Create plotting functions 
 - [   ] Upload example datasets 

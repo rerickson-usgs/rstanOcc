@@ -76,7 +76,8 @@ of their bighead and silver carp monitoring.
 This will include a reference to Mize et al. once the
 help file is fleshed out.
 
-With this model, I will need to move more details into hte r
+With this model, I will need to move more details into the r
+function.
 }
 \examples{
 2 + 2

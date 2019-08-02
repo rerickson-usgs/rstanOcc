@@ -45,21 +45,21 @@ stan::io::program_reader prog_reader__() {
 #include <stan_meta_header.hpp>
  class model_eDNAoccupancy : public prob_grad {
 private:
-        int nSites;
-        int nPsiCoef;
-        matrix_d Xpsi;
-        int totalSamples;
-        int nPCoef;
-        int nThetaCoef;
-        matrix_d Vp;
-        matrix_d Wtheta;
+        int n_sites;
+        int n_Psi_coef;
+        matrix_d X_psi;
+        int n_samples;
+        int n_p_coef;
+        int n_Theta_coef;
+        matrix_d V_p;
+        matrix_d W_theta;
         std::vector<int> y;
-        std::vector<int> aObs;
+        std::vector<int> a_obs;
         std::vector<int> k;
-        std::vector<int> startIndex;
-        std::vector<int> endIndex;
-        std::vector<int> zObs;
-        std::vector<int> nSamples;
+        std::vector<int> start_index;
+        std::vector<int> end_index;
+        std::vector<int> z_obs;
+        std::vector<int> n_samples_per_site;
 public:
     model_eDNAoccupancy(stan::io::var_context& context__,
         std::ostream* pstream__ = 0)
@@ -97,197 +97,197 @@ public:
         try {
             // initialize data block variables from context__
             current_statement_begin__ = 3;
-            context__.validate_dims("data initialization", "nSites", "int", context__.to_vec());
-            nSites = int(0);
-            vals_i__ = context__.vals_i("nSites");
+            context__.validate_dims("data initialization", "n_sites", "int", context__.to_vec());
+            n_sites = int(0);
+            vals_i__ = context__.vals_i("n_sites");
             pos__ = 0;
-            nSites = vals_i__[pos__++];
-            check_greater_or_equal(function__, "nSites", nSites, 1);
+            n_sites = vals_i__[pos__++];
+            check_greater_or_equal(function__, "n_sites", n_sites, 1);
 
             current_statement_begin__ = 4;
-            context__.validate_dims("data initialization", "nPsiCoef", "int", context__.to_vec());
-            nPsiCoef = int(0);
-            vals_i__ = context__.vals_i("nPsiCoef");
+            context__.validate_dims("data initialization", "n_Psi_coef", "int", context__.to_vec());
+            n_Psi_coef = int(0);
+            vals_i__ = context__.vals_i("n_Psi_coef");
             pos__ = 0;
-            nPsiCoef = vals_i__[pos__++];
-            check_greater_or_equal(function__, "nPsiCoef", nPsiCoef, 1);
+            n_Psi_coef = vals_i__[pos__++];
+            check_greater_or_equal(function__, "n_Psi_coef", n_Psi_coef, 1);
 
             current_statement_begin__ = 5;
-            validate_non_negative_index("Xpsi", "nSites", nSites);
-            validate_non_negative_index("Xpsi", "nPsiCoef", nPsiCoef);
-            context__.validate_dims("data initialization", "Xpsi", "matrix_d", context__.to_vec(nSites,nPsiCoef));
-            Xpsi = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>(nSites, nPsiCoef);
-            vals_r__ = context__.vals_r("Xpsi");
+            validate_non_negative_index("X_psi", "n_sites", n_sites);
+            validate_non_negative_index("X_psi", "n_Psi_coef", n_Psi_coef);
+            context__.validate_dims("data initialization", "X_psi", "matrix_d", context__.to_vec(n_sites,n_Psi_coef));
+            X_psi = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>(n_sites, n_Psi_coef);
+            vals_r__ = context__.vals_r("X_psi");
             pos__ = 0;
-            size_t Xpsi_j_2_max__ = nPsiCoef;
-            size_t Xpsi_j_1_max__ = nSites;
-            for (size_t j_2__ = 0; j_2__ < Xpsi_j_2_max__; ++j_2__) {
-                for (size_t j_1__ = 0; j_1__ < Xpsi_j_1_max__; ++j_1__) {
-                    Xpsi(j_1__, j_2__) = vals_r__[pos__++];
+            size_t X_psi_j_2_max__ = n_Psi_coef;
+            size_t X_psi_j_1_max__ = n_sites;
+            for (size_t j_2__ = 0; j_2__ < X_psi_j_2_max__; ++j_2__) {
+                for (size_t j_1__ = 0; j_1__ < X_psi_j_1_max__; ++j_1__) {
+                    X_psi(j_1__, j_2__) = vals_r__[pos__++];
                 }
             }
 
             current_statement_begin__ = 8;
-            context__.validate_dims("data initialization", "totalSamples", "int", context__.to_vec());
-            totalSamples = int(0);
-            vals_i__ = context__.vals_i("totalSamples");
+            context__.validate_dims("data initialization", "n_samples", "int", context__.to_vec());
+            n_samples = int(0);
+            vals_i__ = context__.vals_i("n_samples");
             pos__ = 0;
-            totalSamples = vals_i__[pos__++];
-            check_greater_or_equal(function__, "totalSamples", totalSamples, 1);
+            n_samples = vals_i__[pos__++];
+            check_greater_or_equal(function__, "n_samples", n_samples, 1);
 
             current_statement_begin__ = 9;
-            context__.validate_dims("data initialization", "nPCoef", "int", context__.to_vec());
-            nPCoef = int(0);
-            vals_i__ = context__.vals_i("nPCoef");
+            context__.validate_dims("data initialization", "n_p_coef", "int", context__.to_vec());
+            n_p_coef = int(0);
+            vals_i__ = context__.vals_i("n_p_coef");
             pos__ = 0;
-            nPCoef = vals_i__[pos__++];
-            check_greater_or_equal(function__, "nPCoef", nPCoef, 1);
+            n_p_coef = vals_i__[pos__++];
+            check_greater_or_equal(function__, "n_p_coef", n_p_coef, 1);
 
             current_statement_begin__ = 10;
-            context__.validate_dims("data initialization", "nThetaCoef", "int", context__.to_vec());
-            nThetaCoef = int(0);
-            vals_i__ = context__.vals_i("nThetaCoef");
+            context__.validate_dims("data initialization", "n_Theta_coef", "int", context__.to_vec());
+            n_Theta_coef = int(0);
+            vals_i__ = context__.vals_i("n_Theta_coef");
             pos__ = 0;
-            nThetaCoef = vals_i__[pos__++];
-            check_greater_or_equal(function__, "nThetaCoef", nThetaCoef, 1);
+            n_Theta_coef = vals_i__[pos__++];
+            check_greater_or_equal(function__, "n_Theta_coef", n_Theta_coef, 1);
 
             current_statement_begin__ = 11;
-            validate_non_negative_index("Vp", "totalSamples", totalSamples);
-            validate_non_negative_index("Vp", "nPCoef", nPCoef);
-            context__.validate_dims("data initialization", "Vp", "matrix_d", context__.to_vec(totalSamples,nPCoef));
-            Vp = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>(totalSamples, nPCoef);
-            vals_r__ = context__.vals_r("Vp");
+            validate_non_negative_index("V_p", "n_samples", n_samples);
+            validate_non_negative_index("V_p", "n_p_coef", n_p_coef);
+            context__.validate_dims("data initialization", "V_p", "matrix_d", context__.to_vec(n_samples,n_p_coef));
+            V_p = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>(n_samples, n_p_coef);
+            vals_r__ = context__.vals_r("V_p");
             pos__ = 0;
-            size_t Vp_j_2_max__ = nPCoef;
-            size_t Vp_j_1_max__ = totalSamples;
-            for (size_t j_2__ = 0; j_2__ < Vp_j_2_max__; ++j_2__) {
-                for (size_t j_1__ = 0; j_1__ < Vp_j_1_max__; ++j_1__) {
-                    Vp(j_1__, j_2__) = vals_r__[pos__++];
+            size_t V_p_j_2_max__ = n_p_coef;
+            size_t V_p_j_1_max__ = n_samples;
+            for (size_t j_2__ = 0; j_2__ < V_p_j_2_max__; ++j_2__) {
+                for (size_t j_1__ = 0; j_1__ < V_p_j_1_max__; ++j_1__) {
+                    V_p(j_1__, j_2__) = vals_r__[pos__++];
                 }
             }
 
             current_statement_begin__ = 12;
-            validate_non_negative_index("Wtheta", "totalSamples", totalSamples);
-            validate_non_negative_index("Wtheta", "nThetaCoef", nThetaCoef);
-            context__.validate_dims("data initialization", "Wtheta", "matrix_d", context__.to_vec(totalSamples,nThetaCoef));
-            Wtheta = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>(totalSamples, nThetaCoef);
-            vals_r__ = context__.vals_r("Wtheta");
+            validate_non_negative_index("W_theta", "n_samples", n_samples);
+            validate_non_negative_index("W_theta", "n_Theta_coef", n_Theta_coef);
+            context__.validate_dims("data initialization", "W_theta", "matrix_d", context__.to_vec(n_samples,n_Theta_coef));
+            W_theta = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>(n_samples, n_Theta_coef);
+            vals_r__ = context__.vals_r("W_theta");
             pos__ = 0;
-            size_t Wtheta_j_2_max__ = nThetaCoef;
-            size_t Wtheta_j_1_max__ = totalSamples;
-            for (size_t j_2__ = 0; j_2__ < Wtheta_j_2_max__; ++j_2__) {
-                for (size_t j_1__ = 0; j_1__ < Wtheta_j_1_max__; ++j_1__) {
-                    Wtheta(j_1__, j_2__) = vals_r__[pos__++];
+            size_t W_theta_j_2_max__ = n_Theta_coef;
+            size_t W_theta_j_1_max__ = n_samples;
+            for (size_t j_2__ = 0; j_2__ < W_theta_j_2_max__; ++j_2__) {
+                for (size_t j_1__ = 0; j_1__ < W_theta_j_1_max__; ++j_1__) {
+                    W_theta(j_1__, j_2__) = vals_r__[pos__++];
                 }
             }
 
             current_statement_begin__ = 15;
-            validate_non_negative_index("y", "totalSamples", totalSamples);
-            context__.validate_dims("data initialization", "y", "int", context__.to_vec(totalSamples));
-            y = std::vector<int>(totalSamples, int(0));
+            validate_non_negative_index("y", "n_samples", n_samples);
+            context__.validate_dims("data initialization", "y", "int", context__.to_vec(n_samples));
+            y = std::vector<int>(n_samples, int(0));
             vals_i__ = context__.vals_i("y");
             pos__ = 0;
-            size_t y_k_0_max__ = totalSamples;
+            size_t y_k_0_max__ = n_samples;
             for (size_t k_0__ = 0; k_0__ < y_k_0_max__; ++k_0__) {
                 y[k_0__] = vals_i__[pos__++];
             }
-            size_t y_i_0_max__ = totalSamples;
+            size_t y_i_0_max__ = n_samples;
             for (size_t i_0__ = 0; i_0__ < y_i_0_max__; ++i_0__) {
                 check_greater_or_equal(function__, "y[i_0__]", y[i_0__], 0);
             }
 
             current_statement_begin__ = 16;
-            validate_non_negative_index("aObs", "totalSamples", totalSamples);
-            context__.validate_dims("data initialization", "aObs", "int", context__.to_vec(totalSamples));
-            aObs = std::vector<int>(totalSamples, int(0));
-            vals_i__ = context__.vals_i("aObs");
+            validate_non_negative_index("a_obs", "n_samples", n_samples);
+            context__.validate_dims("data initialization", "a_obs", "int", context__.to_vec(n_samples));
+            a_obs = std::vector<int>(n_samples, int(0));
+            vals_i__ = context__.vals_i("a_obs");
             pos__ = 0;
-            size_t aObs_k_0_max__ = totalSamples;
-            for (size_t k_0__ = 0; k_0__ < aObs_k_0_max__; ++k_0__) {
-                aObs[k_0__] = vals_i__[pos__++];
+            size_t a_obs_k_0_max__ = n_samples;
+            for (size_t k_0__ = 0; k_0__ < a_obs_k_0_max__; ++k_0__) {
+                a_obs[k_0__] = vals_i__[pos__++];
             }
-            size_t aObs_i_0_max__ = totalSamples;
-            for (size_t i_0__ = 0; i_0__ < aObs_i_0_max__; ++i_0__) {
-                check_greater_or_equal(function__, "aObs[i_0__]", aObs[i_0__], 0);
-                check_less_or_equal(function__, "aObs[i_0__]", aObs[i_0__], 1);
+            size_t a_obs_i_0_max__ = n_samples;
+            for (size_t i_0__ = 0; i_0__ < a_obs_i_0_max__; ++i_0__) {
+                check_greater_or_equal(function__, "a_obs[i_0__]", a_obs[i_0__], 0);
+                check_less_or_equal(function__, "a_obs[i_0__]", a_obs[i_0__], 1);
             }
 
             current_statement_begin__ = 17;
-            validate_non_negative_index("k", "totalSamples", totalSamples);
-            context__.validate_dims("data initialization", "k", "int", context__.to_vec(totalSamples));
-            k = std::vector<int>(totalSamples, int(0));
+            validate_non_negative_index("k", "n_samples", n_samples);
+            context__.validate_dims("data initialization", "k", "int", context__.to_vec(n_samples));
+            k = std::vector<int>(n_samples, int(0));
             vals_i__ = context__.vals_i("k");
             pos__ = 0;
-            size_t k_k_0_max__ = totalSamples;
+            size_t k_k_0_max__ = n_samples;
             for (size_t k_0__ = 0; k_0__ < k_k_0_max__; ++k_0__) {
                 k[k_0__] = vals_i__[pos__++];
             }
-            size_t k_i_0_max__ = totalSamples;
+            size_t k_i_0_max__ = n_samples;
             for (size_t i_0__ = 0; i_0__ < k_i_0_max__; ++i_0__) {
                 check_greater_or_equal(function__, "k[i_0__]", k[i_0__], 0);
             }
 
             current_statement_begin__ = 18;
-            validate_non_negative_index("startIndex", "nSites", nSites);
-            context__.validate_dims("data initialization", "startIndex", "int", context__.to_vec(nSites));
-            startIndex = std::vector<int>(nSites, int(0));
-            vals_i__ = context__.vals_i("startIndex");
+            validate_non_negative_index("start_index", "n_sites", n_sites);
+            context__.validate_dims("data initialization", "start_index", "int", context__.to_vec(n_sites));
+            start_index = std::vector<int>(n_sites, int(0));
+            vals_i__ = context__.vals_i("start_index");
             pos__ = 0;
-            size_t startIndex_k_0_max__ = nSites;
-            for (size_t k_0__ = 0; k_0__ < startIndex_k_0_max__; ++k_0__) {
-                startIndex[k_0__] = vals_i__[pos__++];
+            size_t start_index_k_0_max__ = n_sites;
+            for (size_t k_0__ = 0; k_0__ < start_index_k_0_max__; ++k_0__) {
+                start_index[k_0__] = vals_i__[pos__++];
             }
-            size_t startIndex_i_0_max__ = nSites;
-            for (size_t i_0__ = 0; i_0__ < startIndex_i_0_max__; ++i_0__) {
-                check_greater_or_equal(function__, "startIndex[i_0__]", startIndex[i_0__], 0);
-                check_less_or_equal(function__, "startIndex[i_0__]", startIndex[i_0__], totalSamples);
+            size_t start_index_i_0_max__ = n_sites;
+            for (size_t i_0__ = 0; i_0__ < start_index_i_0_max__; ++i_0__) {
+                check_greater_or_equal(function__, "start_index[i_0__]", start_index[i_0__], 0);
+                check_less_or_equal(function__, "start_index[i_0__]", start_index[i_0__], n_samples);
             }
 
             current_statement_begin__ = 19;
-            validate_non_negative_index("endIndex", "nSites", nSites);
-            context__.validate_dims("data initialization", "endIndex", "int", context__.to_vec(nSites));
-            endIndex = std::vector<int>(nSites, int(0));
-            vals_i__ = context__.vals_i("endIndex");
+            validate_non_negative_index("end_index", "n_sites", n_sites);
+            context__.validate_dims("data initialization", "end_index", "int", context__.to_vec(n_sites));
+            end_index = std::vector<int>(n_sites, int(0));
+            vals_i__ = context__.vals_i("end_index");
             pos__ = 0;
-            size_t endIndex_k_0_max__ = nSites;
-            for (size_t k_0__ = 0; k_0__ < endIndex_k_0_max__; ++k_0__) {
-                endIndex[k_0__] = vals_i__[pos__++];
+            size_t end_index_k_0_max__ = n_sites;
+            for (size_t k_0__ = 0; k_0__ < end_index_k_0_max__; ++k_0__) {
+                end_index[k_0__] = vals_i__[pos__++];
             }
-            size_t endIndex_i_0_max__ = nSites;
-            for (size_t i_0__ = 0; i_0__ < endIndex_i_0_max__; ++i_0__) {
-                check_greater_or_equal(function__, "endIndex[i_0__]", endIndex[i_0__], 0);
-                check_less_or_equal(function__, "endIndex[i_0__]", endIndex[i_0__], totalSamples);
+            size_t end_index_i_0_max__ = n_sites;
+            for (size_t i_0__ = 0; i_0__ < end_index_i_0_max__; ++i_0__) {
+                check_greater_or_equal(function__, "end_index[i_0__]", end_index[i_0__], 0);
+                check_less_or_equal(function__, "end_index[i_0__]", end_index[i_0__], n_samples);
             }
 
             current_statement_begin__ = 22;
-            validate_non_negative_index("zObs", "nSites", nSites);
-            context__.validate_dims("data initialization", "zObs", "int", context__.to_vec(nSites));
-            zObs = std::vector<int>(nSites, int(0));
-            vals_i__ = context__.vals_i("zObs");
+            validate_non_negative_index("z_obs", "n_sites", n_sites);
+            context__.validate_dims("data initialization", "z_obs", "int", context__.to_vec(n_sites));
+            z_obs = std::vector<int>(n_sites, int(0));
+            vals_i__ = context__.vals_i("z_obs");
             pos__ = 0;
-            size_t zObs_k_0_max__ = nSites;
-            for (size_t k_0__ = 0; k_0__ < zObs_k_0_max__; ++k_0__) {
-                zObs[k_0__] = vals_i__[pos__++];
+            size_t z_obs_k_0_max__ = n_sites;
+            for (size_t k_0__ = 0; k_0__ < z_obs_k_0_max__; ++k_0__) {
+                z_obs[k_0__] = vals_i__[pos__++];
             }
-            size_t zObs_i_0_max__ = nSites;
-            for (size_t i_0__ = 0; i_0__ < zObs_i_0_max__; ++i_0__) {
-                check_greater_or_equal(function__, "zObs[i_0__]", zObs[i_0__], 0);
-                check_less_or_equal(function__, "zObs[i_0__]", zObs[i_0__], 1);
+            size_t z_obs_i_0_max__ = n_sites;
+            for (size_t i_0__ = 0; i_0__ < z_obs_i_0_max__; ++i_0__) {
+                check_greater_or_equal(function__, "z_obs[i_0__]", z_obs[i_0__], 0);
+                check_less_or_equal(function__, "z_obs[i_0__]", z_obs[i_0__], 1);
             }
 
             current_statement_begin__ = 25;
-            validate_non_negative_index("nSamples", "nSites", nSites);
-            context__.validate_dims("data initialization", "nSamples", "int", context__.to_vec(nSites));
-            nSamples = std::vector<int>(nSites, int(0));
-            vals_i__ = context__.vals_i("nSamples");
+            validate_non_negative_index("n_samples_per_site", "n_sites", n_sites);
+            context__.validate_dims("data initialization", "n_samples_per_site", "int", context__.to_vec(n_sites));
+            n_samples_per_site = std::vector<int>(n_sites, int(0));
+            vals_i__ = context__.vals_i("n_samples_per_site");
             pos__ = 0;
-            size_t nSamples_k_0_max__ = nSites;
-            for (size_t k_0__ = 0; k_0__ < nSamples_k_0_max__; ++k_0__) {
-                nSamples[k_0__] = vals_i__[pos__++];
+            size_t n_samples_per_site_k_0_max__ = n_sites;
+            for (size_t k_0__ = 0; k_0__ < n_samples_per_site_k_0_max__; ++k_0__) {
+                n_samples_per_site[k_0__] = vals_i__[pos__++];
             }
-            size_t nSamples_i_0_max__ = nSites;
-            for (size_t i_0__ = 0; i_0__ < nSamples_i_0_max__; ++i_0__) {
-                check_greater_or_equal(function__, "nSamples[i_0__]", nSamples[i_0__], 0);
+            size_t n_samples_per_site_i_0_max__ = n_sites;
+            for (size_t i_0__ = 0; i_0__ < n_samples_per_site_i_0_max__; ++i_0__) {
+                check_greater_or_equal(function__, "n_samples_per_site[i_0__]", n_samples_per_site[i_0__], 0);
             }
 
 
@@ -300,14 +300,14 @@ public:
             num_params_r__ = 0U;
             param_ranges_i__.clear();
             current_statement_begin__ = 28;
-            validate_non_negative_index("beta_psi", "nPsiCoef", nPsiCoef);
-            num_params_r__ += nPsiCoef;
+            validate_non_negative_index("beta_psi", "n_Psi_coef", n_Psi_coef);
+            num_params_r__ += n_Psi_coef;
             current_statement_begin__ = 29;
-            validate_non_negative_index("delta_p", "nPCoef", nPCoef);
-            num_params_r__ += nPCoef;
+            validate_non_negative_index("delta_p", "n_p_coef", n_p_coef);
+            num_params_r__ += n_p_coef;
             current_statement_begin__ = 30;
-            validate_non_negative_index("alpha_theta", "nThetaCoef", nThetaCoef);
-            num_params_r__ += nThetaCoef;
+            validate_non_negative_index("alpha_theta", "n_Theta_coef", n_Theta_coef);
+            num_params_r__ += n_Theta_coef;
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -334,10 +334,10 @@ public:
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable beta_psi missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("beta_psi");
         pos__ = 0U;
-        validate_non_negative_index("beta_psi", "nPsiCoef", nPsiCoef);
-        context__.validate_dims("parameter initialization", "beta_psi", "vector_d", context__.to_vec(nPsiCoef));
-        Eigen::Matrix<double, Eigen::Dynamic, 1> beta_psi(nPsiCoef);
-        size_t beta_psi_j_1_max__ = nPsiCoef;
+        validate_non_negative_index("beta_psi", "n_Psi_coef", n_Psi_coef);
+        context__.validate_dims("parameter initialization", "beta_psi", "vector_d", context__.to_vec(n_Psi_coef));
+        Eigen::Matrix<double, Eigen::Dynamic, 1> beta_psi(n_Psi_coef);
+        size_t beta_psi_j_1_max__ = n_Psi_coef;
         for (size_t j_1__ = 0; j_1__ < beta_psi_j_1_max__; ++j_1__) {
             beta_psi(j_1__) = vals_r__[pos__++];
         }
@@ -352,10 +352,10 @@ public:
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable delta_p missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("delta_p");
         pos__ = 0U;
-        validate_non_negative_index("delta_p", "nPCoef", nPCoef);
-        context__.validate_dims("parameter initialization", "delta_p", "vector_d", context__.to_vec(nPCoef));
-        Eigen::Matrix<double, Eigen::Dynamic, 1> delta_p(nPCoef);
-        size_t delta_p_j_1_max__ = nPCoef;
+        validate_non_negative_index("delta_p", "n_p_coef", n_p_coef);
+        context__.validate_dims("parameter initialization", "delta_p", "vector_d", context__.to_vec(n_p_coef));
+        Eigen::Matrix<double, Eigen::Dynamic, 1> delta_p(n_p_coef);
+        size_t delta_p_j_1_max__ = n_p_coef;
         for (size_t j_1__ = 0; j_1__ < delta_p_j_1_max__; ++j_1__) {
             delta_p(j_1__) = vals_r__[pos__++];
         }
@@ -370,10 +370,10 @@ public:
             stan::lang::rethrow_located(std::runtime_error(std::string("Variable alpha_theta missing")), current_statement_begin__, prog_reader__());
         vals_r__ = context__.vals_r("alpha_theta");
         pos__ = 0U;
-        validate_non_negative_index("alpha_theta", "nThetaCoef", nThetaCoef);
-        context__.validate_dims("parameter initialization", "alpha_theta", "vector_d", context__.to_vec(nThetaCoef));
-        Eigen::Matrix<double, Eigen::Dynamic, 1> alpha_theta(nThetaCoef);
-        size_t alpha_theta_j_1_max__ = nThetaCoef;
+        validate_non_negative_index("alpha_theta", "n_Theta_coef", n_Theta_coef);
+        context__.validate_dims("parameter initialization", "alpha_theta", "vector_d", context__.to_vec(n_Theta_coef));
+        Eigen::Matrix<double, Eigen::Dynamic, 1> alpha_theta(n_Theta_coef);
+        size_t alpha_theta_j_1_max__ = n_Theta_coef;
         for (size_t j_1__ = 0; j_1__ < alpha_theta_j_1_max__; ++j_1__) {
             alpha_theta(j_1__) = vals_r__[pos__++];
         }
@@ -419,54 +419,54 @@ public:
             Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> beta_psi;
             (void) beta_psi;  // dummy to suppress unused var warning
             if (jacobian__)
-                beta_psi = in__.vector_constrain(nPsiCoef, lp__);
+                beta_psi = in__.vector_constrain(n_Psi_coef, lp__);
             else
-                beta_psi = in__.vector_constrain(nPsiCoef);
+                beta_psi = in__.vector_constrain(n_Psi_coef);
 
             current_statement_begin__ = 29;
             Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> delta_p;
             (void) delta_p;  // dummy to suppress unused var warning
             if (jacobian__)
-                delta_p = in__.vector_constrain(nPCoef, lp__);
+                delta_p = in__.vector_constrain(n_p_coef, lp__);
             else
-                delta_p = in__.vector_constrain(nPCoef);
+                delta_p = in__.vector_constrain(n_p_coef);
 
             current_statement_begin__ = 30;
             Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> alpha_theta;
             (void) alpha_theta;  // dummy to suppress unused var warning
             if (jacobian__)
-                alpha_theta = in__.vector_constrain(nThetaCoef, lp__);
+                alpha_theta = in__.vector_constrain(n_Theta_coef, lp__);
             else
-                alpha_theta = in__.vector_constrain(nThetaCoef);
+                alpha_theta = in__.vector_constrain(n_Theta_coef);
 
             // transformed parameters
             current_statement_begin__ = 33;
-            validate_non_negative_index("logit_p", "totalSamples", totalSamples);
-            Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> logit_p(totalSamples);
+            validate_non_negative_index("logit_p", "n_samples", n_samples);
+            Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> logit_p(n_samples);
             stan::math::initialize(logit_p, DUMMY_VAR__);
             stan::math::fill(logit_p, DUMMY_VAR__);
-            stan::math::assign(logit_p,multiply(Vp, delta_p));
+            stan::math::assign(logit_p,multiply(V_p, delta_p));
 
             current_statement_begin__ = 34;
-            validate_non_negative_index("logit_theta", "totalSamples", totalSamples);
-            Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> logit_theta(totalSamples);
+            validate_non_negative_index("logit_theta", "n_samples", n_samples);
+            Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> logit_theta(n_samples);
             stan::math::initialize(logit_theta, DUMMY_VAR__);
             stan::math::fill(logit_theta, DUMMY_VAR__);
-            stan::math::assign(logit_theta,multiply(Wtheta, alpha_theta));
+            stan::math::assign(logit_theta,multiply(W_theta, alpha_theta));
 
             current_statement_begin__ = 35;
-            validate_non_negative_index("logit_psi", "nSites", nSites);
-            Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> logit_psi(nSites);
+            validate_non_negative_index("logit_psi", "n_sites", n_sites);
+            Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> logit_psi(n_sites);
             stan::math::initialize(logit_psi, DUMMY_VAR__);
             stan::math::fill(logit_psi, DUMMY_VAR__);
-            stan::math::assign(logit_psi,multiply(Xpsi, beta_psi));
+            stan::math::assign(logit_psi,multiply(X_psi, beta_psi));
 
             // validate transformed parameters
             const char* function__ = "validate transformed params";
             (void) function__;  // dummy to suppress unused var warning
 
             current_statement_begin__ = 33;
-            size_t logit_p_j_1_max__ = totalSamples;
+            size_t logit_p_j_1_max__ = n_samples;
             for (size_t j_1__ = 0; j_1__ < logit_p_j_1_max__; ++j_1__) {
                 if (stan::math::is_uninitialized(logit_p(j_1__))) {
                     std::stringstream msg__;
@@ -475,7 +475,7 @@ public:
                 }
             }
             current_statement_begin__ = 34;
-            size_t logit_theta_j_1_max__ = totalSamples;
+            size_t logit_theta_j_1_max__ = n_samples;
             for (size_t j_1__ = 0; j_1__ < logit_theta_j_1_max__; ++j_1__) {
                 if (stan::math::is_uninitialized(logit_theta(j_1__))) {
                     std::stringstream msg__;
@@ -484,7 +484,7 @@ public:
                 }
             }
             current_statement_begin__ = 35;
-            size_t logit_psi_j_1_max__ = nSites;
+            size_t logit_psi_j_1_max__ = n_sites;
             for (size_t j_1__ = 0; j_1__ < logit_psi_j_1_max__; ++j_1__) {
                 if (stan::math::is_uninitialized(logit_psi(j_1__))) {
                     std::stringstream msg__;
@@ -508,29 +508,29 @@ public:
             stan::math::fill(targetMissedDetectionSample, DUMMY_VAR__);
 
             current_statement_begin__ = 41;
-            validate_non_negative_index("log_psi", "nSites", nSites);
-            Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> log_psi(nSites);
+            validate_non_negative_index("log_psi", "n_sites", n_sites);
+            Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> log_psi(n_sites);
             stan::math::initialize(log_psi, DUMMY_VAR__);
             stan::math::fill(log_psi, DUMMY_VAR__);
             stan::math::assign(log_psi,log_inv_logit(logit_psi));
 
             current_statement_begin__ = 42;
-            validate_non_negative_index("log1m_psi", "nSites", nSites);
-            Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> log1m_psi(nSites);
+            validate_non_negative_index("log1m_psi", "n_sites", n_sites);
+            Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> log1m_psi(n_sites);
             stan::math::initialize(log1m_psi, DUMMY_VAR__);
             stan::math::fill(log1m_psi, DUMMY_VAR__);
             stan::math::assign(log1m_psi,log1m_inv_logit(logit_psi));
 
             current_statement_begin__ = 44;
-            validate_non_negative_index("log_theta", "totalSamples", totalSamples);
-            Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> log_theta(totalSamples);
+            validate_non_negative_index("log_theta", "n_samples", n_samples);
+            Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> log_theta(n_samples);
             stan::math::initialize(log_theta, DUMMY_VAR__);
             stan::math::fill(log_theta, DUMMY_VAR__);
             stan::math::assign(log_theta,log_inv_logit(logit_theta));
 
             current_statement_begin__ = 45;
-            validate_non_negative_index("log1m_theta", "totalSamples", totalSamples);
-            Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> log1m_theta(totalSamples);
+            validate_non_negative_index("log1m_theta", "n_samples", n_samples);
+            Eigen::Matrix<local_scalar_t__, Eigen::Dynamic, 1> log1m_theta(n_samples);
             stan::math::initialize(log1m_theta, DUMMY_VAR__);
             stan::math::fill(log1m_theta, DUMMY_VAR__);
             stan::math::assign(log1m_theta,log1m_inv_logit(logit_theta));
@@ -543,28 +543,28 @@ public:
             current_statement_begin__ = 49;
             lp_accum__.add(normal_log<propto__>(delta_p, 0, 1));
             current_statement_begin__ = 52;
-            for (int site = 1; site <= nSites; ++site) {
+            for (int site = 1; site <= n_sites; ++site) {
 
                 current_statement_begin__ = 53;
-                if (as_bool(logical_gt(get_base1(nSamples, site, "nSamples", 1), 0))) {
+                if (as_bool(logical_gt(get_base1(n_samples_per_site, site, "n_samples_per_site", 1), 0))) {
 
                     current_statement_begin__ = 54;
-                    if (as_bool(logical_gt(get_base1(zObs, site, "zObs", 1), 0))) {
+                    if (as_bool(logical_gt(get_base1(z_obs, site, "z_obs", 1), 0))) {
 
                         current_statement_begin__ = 55;
                         stan::math::assign(targetKnownDetection, 0);
                         current_statement_begin__ = 56;
-                        for (int sample = 1; sample <= get_base1(nSamples, site, "nSamples", 1); ++sample) {
+                        for (int sample = 1; sample <= get_base1(n_samples_per_site, site, "n_samples_per_site", 1); ++sample) {
 
                             current_statement_begin__ = 57;
-                            if (as_bool(logical_gt(get_base1(stan::model::rvalue(aObs, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "aObs"), sample, "stan::model::rvalue(aObs, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"aObs\")", 1), 0))) {
+                            if (as_bool(logical_gt(get_base1(stan::model::rvalue(a_obs, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "a_obs"), sample, "stan::model::rvalue(a_obs, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"a_obs\")", 1), 0))) {
 
                                 current_statement_begin__ = 58;
-                                stan::math::assign(targetKnownDetection, (targetKnownDetection + (get_base1(stan::model::rvalue(log_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "log_theta"), sample, "stan::model::rvalue(log_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"log_theta\")", 1) + binomial_logit_log(get_base1(stan::model::rvalue(y, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "y"), sample, "stan::model::rvalue(y, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"y\")", 1), get_base1(stan::model::rvalue(k, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "k"), sample, "stan::model::rvalue(k, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"k\")", 1), get_base1(stan::model::rvalue(logit_p, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "logit_p"), sample, "stan::model::rvalue(logit_p, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"logit_p\")", 1)))));
+                                stan::math::assign(targetKnownDetection, (targetKnownDetection + (get_base1(stan::model::rvalue(log_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "log_theta"), sample, "stan::model::rvalue(log_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"log_theta\")", 1) + binomial_logit_log(get_base1(stan::model::rvalue(y, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "y"), sample, "stan::model::rvalue(y, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"y\")", 1), get_base1(stan::model::rvalue(k, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "k"), sample, "stan::model::rvalue(k, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"k\")", 1), get_base1(stan::model::rvalue(logit_p, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "logit_p"), sample, "stan::model::rvalue(logit_p, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"logit_p\")", 1)))));
                             } else {
 
                                 current_statement_begin__ = 64;
-                                stan::math::assign(targetKnownDetection, log_sum_exp((get_base1(stan::model::rvalue(log_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "log_theta"), sample, "stan::model::rvalue(log_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"log_theta\")", 1) + binomial_logit_log(get_base1(stan::model::rvalue(y, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "y"), sample, "stan::model::rvalue(y, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"y\")", 1), get_base1(stan::model::rvalue(k, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "k"), sample, "stan::model::rvalue(k, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"k\")", 1), get_base1(stan::model::rvalue(logit_p, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "logit_p"), sample, "stan::model::rvalue(logit_p, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"logit_p\")", 1))), get_base1(stan::model::rvalue(log1m_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "log1m_theta"), sample, "stan::model::rvalue(log1m_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"log1m_theta\")", 1)));
+                                stan::math::assign(targetKnownDetection, log_sum_exp((get_base1(stan::model::rvalue(log_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "log_theta"), sample, "stan::model::rvalue(log_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"log_theta\")", 1) + binomial_logit_log(get_base1(stan::model::rvalue(y, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "y"), sample, "stan::model::rvalue(y, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"y\")", 1), get_base1(stan::model::rvalue(k, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "k"), sample, "stan::model::rvalue(k, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"k\")", 1), get_base1(stan::model::rvalue(logit_p, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "logit_p"), sample, "stan::model::rvalue(logit_p, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"logit_p\")", 1))), get_base1(stan::model::rvalue(log1m_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "log1m_theta"), sample, "stan::model::rvalue(log1m_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"log1m_theta\")", 1)));
                             }
                         }
                         current_statement_begin__ = 72;
@@ -574,10 +574,10 @@ public:
                         current_statement_begin__ = 74;
                         stan::math::assign(targetMissedDetectionSample, 0);
                         current_statement_begin__ = 76;
-                        for (int sample = 1; sample <= get_base1(nSamples, site, "nSamples", 1); ++sample) {
+                        for (int sample = 1; sample <= get_base1(n_samples_per_site, site, "n_samples_per_site", 1); ++sample) {
 
                             current_statement_begin__ = 77;
-                            stan::math::assign(targetMissedDetectionSample, (targetMissedDetectionSample + log_sum_exp((get_base1(stan::model::rvalue(log_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "log_theta"), sample, "stan::model::rvalue(log_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"log_theta\")", 1) + binomial_logit_log(get_base1(stan::model::rvalue(y, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "y"), sample, "stan::model::rvalue(y, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"y\")", 1), get_base1(stan::model::rvalue(k, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "k"), sample, "stan::model::rvalue(k, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"k\")", 1), get_base1(stan::model::rvalue(logit_p, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "logit_p"), sample, "stan::model::rvalue(logit_p, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"logit_p\")", 1))), get_base1(stan::model::rvalue(log1m_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, "startIndex", 1), get_base1(endIndex, site, "endIndex", 1)), stan::model::nil_index_list()), "log1m_theta"), sample, "stan::model::rvalue(log1m_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(startIndex, site, \"startIndex\", 1), get_base1(endIndex, site, \"endIndex\", 1)), stan::model::nil_index_list()), \"log1m_theta\")", 1))));
+                            stan::math::assign(targetMissedDetectionSample, (targetMissedDetectionSample + log_sum_exp((get_base1(stan::model::rvalue(log_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "log_theta"), sample, "stan::model::rvalue(log_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"log_theta\")", 1) + binomial_logit_log(get_base1(stan::model::rvalue(y, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "y"), sample, "stan::model::rvalue(y, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"y\")", 1), get_base1(stan::model::rvalue(k, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "k"), sample, "stan::model::rvalue(k, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"k\")", 1), get_base1(stan::model::rvalue(logit_p, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "logit_p"), sample, "stan::model::rvalue(logit_p, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"logit_p\")", 1))), get_base1(stan::model::rvalue(log1m_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, "start_index", 1), get_base1(end_index, site, "end_index", 1)), stan::model::nil_index_list()), "log1m_theta"), sample, "stan::model::rvalue(log1m_theta, stan::model::cons_list(stan::model::index_min_max(get_base1(start_index, site, \"start_index\", 1), get_base1(end_index, site, \"end_index\", 1)), stan::model::nil_index_list()), \"log1m_theta\")", 1))));
                         }
                         current_statement_begin__ = 86;
                         lp_accum__.add(log_sum_exp((get_base1(log_psi, site, "log_psi", 1) + targetMissedDetectionSample), get_base1(log1m_psi, site, "log1m_psi", 1)));
@@ -624,22 +624,22 @@ public:
         dimss__.resize(0);
         std::vector<size_t> dims__;
         dims__.resize(0);
-        dims__.push_back(nPsiCoef);
+        dims__.push_back(n_Psi_coef);
         dimss__.push_back(dims__);
         dims__.resize(0);
-        dims__.push_back(nPCoef);
+        dims__.push_back(n_p_coef);
         dimss__.push_back(dims__);
         dims__.resize(0);
-        dims__.push_back(nThetaCoef);
+        dims__.push_back(n_Theta_coef);
         dimss__.push_back(dims__);
         dims__.resize(0);
-        dims__.push_back(totalSamples);
+        dims__.push_back(n_samples);
         dimss__.push_back(dims__);
         dims__.resize(0);
-        dims__.push_back(totalSamples);
+        dims__.push_back(n_samples);
         dimss__.push_back(dims__);
         dims__.resize(0);
-        dims__.push_back(nSites);
+        dims__.push_back(n_sites);
         dimss__.push_back(dims__);
     }
 
@@ -659,20 +659,20 @@ public:
         (void) function__;  // dummy to suppress unused var warning
 
         // read-transform, write parameters
-        Eigen::Matrix<double, Eigen::Dynamic, 1> beta_psi = in__.vector_constrain(nPsiCoef);
-        size_t beta_psi_j_1_max__ = nPsiCoef;
+        Eigen::Matrix<double, Eigen::Dynamic, 1> beta_psi = in__.vector_constrain(n_Psi_coef);
+        size_t beta_psi_j_1_max__ = n_Psi_coef;
         for (size_t j_1__ = 0; j_1__ < beta_psi_j_1_max__; ++j_1__) {
             vars__.push_back(beta_psi(j_1__));
         }
 
-        Eigen::Matrix<double, Eigen::Dynamic, 1> delta_p = in__.vector_constrain(nPCoef);
-        size_t delta_p_j_1_max__ = nPCoef;
+        Eigen::Matrix<double, Eigen::Dynamic, 1> delta_p = in__.vector_constrain(n_p_coef);
+        size_t delta_p_j_1_max__ = n_p_coef;
         for (size_t j_1__ = 0; j_1__ < delta_p_j_1_max__; ++j_1__) {
             vars__.push_back(delta_p(j_1__));
         }
 
-        Eigen::Matrix<double, Eigen::Dynamic, 1> alpha_theta = in__.vector_constrain(nThetaCoef);
-        size_t alpha_theta_j_1_max__ = nThetaCoef;
+        Eigen::Matrix<double, Eigen::Dynamic, 1> alpha_theta = in__.vector_constrain(n_Theta_coef);
+        size_t alpha_theta_j_1_max__ = n_Theta_coef;
         for (size_t j_1__ = 0; j_1__ < alpha_theta_j_1_max__; ++j_1__) {
             vars__.push_back(alpha_theta(j_1__));
         }
@@ -689,25 +689,25 @@ public:
         try {
             // declare and define transformed parameters
             current_statement_begin__ = 33;
-            validate_non_negative_index("logit_p", "totalSamples", totalSamples);
-            Eigen::Matrix<double, Eigen::Dynamic, 1> logit_p(totalSamples);
+            validate_non_negative_index("logit_p", "n_samples", n_samples);
+            Eigen::Matrix<double, Eigen::Dynamic, 1> logit_p(n_samples);
             stan::math::initialize(logit_p, DUMMY_VAR__);
             stan::math::fill(logit_p, DUMMY_VAR__);
-            stan::math::assign(logit_p,multiply(Vp, delta_p));
+            stan::math::assign(logit_p,multiply(V_p, delta_p));
 
             current_statement_begin__ = 34;
-            validate_non_negative_index("logit_theta", "totalSamples", totalSamples);
-            Eigen::Matrix<double, Eigen::Dynamic, 1> logit_theta(totalSamples);
+            validate_non_negative_index("logit_theta", "n_samples", n_samples);
+            Eigen::Matrix<double, Eigen::Dynamic, 1> logit_theta(n_samples);
             stan::math::initialize(logit_theta, DUMMY_VAR__);
             stan::math::fill(logit_theta, DUMMY_VAR__);
-            stan::math::assign(logit_theta,multiply(Wtheta, alpha_theta));
+            stan::math::assign(logit_theta,multiply(W_theta, alpha_theta));
 
             current_statement_begin__ = 35;
-            validate_non_negative_index("logit_psi", "nSites", nSites);
-            Eigen::Matrix<double, Eigen::Dynamic, 1> logit_psi(nSites);
+            validate_non_negative_index("logit_psi", "n_sites", n_sites);
+            Eigen::Matrix<double, Eigen::Dynamic, 1> logit_psi(n_sites);
             stan::math::initialize(logit_psi, DUMMY_VAR__);
             stan::math::fill(logit_psi, DUMMY_VAR__);
-            stan::math::assign(logit_psi,multiply(Xpsi, beta_psi));
+            stan::math::assign(logit_psi,multiply(X_psi, beta_psi));
 
             if (!include_gqs__ && !include_tparams__) return;
             // validate transformed parameters
@@ -716,15 +716,15 @@ public:
 
             // write transformed parameters
             if (include_tparams__) {
-                size_t logit_p_j_1_max__ = totalSamples;
+                size_t logit_p_j_1_max__ = n_samples;
                 for (size_t j_1__ = 0; j_1__ < logit_p_j_1_max__; ++j_1__) {
                     vars__.push_back(logit_p(j_1__));
                 }
-                size_t logit_theta_j_1_max__ = totalSamples;
+                size_t logit_theta_j_1_max__ = n_samples;
                 for (size_t j_1__ = 0; j_1__ < logit_theta_j_1_max__; ++j_1__) {
                     vars__.push_back(logit_theta(j_1__));
                 }
-                size_t logit_psi_j_1_max__ = nSites;
+                size_t logit_psi_j_1_max__ = n_sites;
                 for (size_t j_1__ = 0; j_1__ < logit_psi_j_1_max__; ++j_1__) {
                     vars__.push_back(logit_psi(j_1__));
                 }
@@ -764,19 +764,19 @@ public:
                                  bool include_tparams__ = true,
                                  bool include_gqs__ = true) const {
         std::stringstream param_name_stream__;
-        size_t beta_psi_j_1_max__ = nPsiCoef;
+        size_t beta_psi_j_1_max__ = n_Psi_coef;
         for (size_t j_1__ = 0; j_1__ < beta_psi_j_1_max__; ++j_1__) {
             param_name_stream__.str(std::string());
             param_name_stream__ << "beta_psi" << '.' << j_1__ + 1;
             param_names__.push_back(param_name_stream__.str());
         }
-        size_t delta_p_j_1_max__ = nPCoef;
+        size_t delta_p_j_1_max__ = n_p_coef;
         for (size_t j_1__ = 0; j_1__ < delta_p_j_1_max__; ++j_1__) {
             param_name_stream__.str(std::string());
             param_name_stream__ << "delta_p" << '.' << j_1__ + 1;
             param_names__.push_back(param_name_stream__.str());
         }
-        size_t alpha_theta_j_1_max__ = nThetaCoef;
+        size_t alpha_theta_j_1_max__ = n_Theta_coef;
         for (size_t j_1__ = 0; j_1__ < alpha_theta_j_1_max__; ++j_1__) {
             param_name_stream__.str(std::string());
             param_name_stream__ << "alpha_theta" << '.' << j_1__ + 1;
@@ -786,19 +786,19 @@ public:
         if (!include_gqs__ && !include_tparams__) return;
 
         if (include_tparams__) {
-            size_t logit_p_j_1_max__ = totalSamples;
+            size_t logit_p_j_1_max__ = n_samples;
             for (size_t j_1__ = 0; j_1__ < logit_p_j_1_max__; ++j_1__) {
                 param_name_stream__.str(std::string());
                 param_name_stream__ << "logit_p" << '.' << j_1__ + 1;
                 param_names__.push_back(param_name_stream__.str());
             }
-            size_t logit_theta_j_1_max__ = totalSamples;
+            size_t logit_theta_j_1_max__ = n_samples;
             for (size_t j_1__ = 0; j_1__ < logit_theta_j_1_max__; ++j_1__) {
                 param_name_stream__.str(std::string());
                 param_name_stream__ << "logit_theta" << '.' << j_1__ + 1;
                 param_names__.push_back(param_name_stream__.str());
             }
-            size_t logit_psi_j_1_max__ = nSites;
+            size_t logit_psi_j_1_max__ = n_sites;
             for (size_t j_1__ = 0; j_1__ < logit_psi_j_1_max__; ++j_1__) {
                 param_name_stream__.str(std::string());
                 param_name_stream__ << "logit_psi" << '.' << j_1__ + 1;
@@ -814,19 +814,19 @@ public:
                                    bool include_tparams__ = true,
                                    bool include_gqs__ = true) const {
         std::stringstream param_name_stream__;
-        size_t beta_psi_j_1_max__ = nPsiCoef;
+        size_t beta_psi_j_1_max__ = n_Psi_coef;
         for (size_t j_1__ = 0; j_1__ < beta_psi_j_1_max__; ++j_1__) {
             param_name_stream__.str(std::string());
             param_name_stream__ << "beta_psi" << '.' << j_1__ + 1;
             param_names__.push_back(param_name_stream__.str());
         }
-        size_t delta_p_j_1_max__ = nPCoef;
+        size_t delta_p_j_1_max__ = n_p_coef;
         for (size_t j_1__ = 0; j_1__ < delta_p_j_1_max__; ++j_1__) {
             param_name_stream__.str(std::string());
             param_name_stream__ << "delta_p" << '.' << j_1__ + 1;
             param_names__.push_back(param_name_stream__.str());
         }
-        size_t alpha_theta_j_1_max__ = nThetaCoef;
+        size_t alpha_theta_j_1_max__ = n_Theta_coef;
         for (size_t j_1__ = 0; j_1__ < alpha_theta_j_1_max__; ++j_1__) {
             param_name_stream__.str(std::string());
             param_name_stream__ << "alpha_theta" << '.' << j_1__ + 1;
@@ -836,19 +836,19 @@ public:
         if (!include_gqs__ && !include_tparams__) return;
 
         if (include_tparams__) {
-            size_t logit_p_j_1_max__ = totalSamples;
+            size_t logit_p_j_1_max__ = n_samples;
             for (size_t j_1__ = 0; j_1__ < logit_p_j_1_max__; ++j_1__) {
                 param_name_stream__.str(std::string());
                 param_name_stream__ << "logit_p" << '.' << j_1__ + 1;
                 param_names__.push_back(param_name_stream__.str());
             }
-            size_t logit_theta_j_1_max__ = totalSamples;
+            size_t logit_theta_j_1_max__ = n_samples;
             for (size_t j_1__ = 0; j_1__ < logit_theta_j_1_max__; ++j_1__) {
                 param_name_stream__.str(std::string());
                 param_name_stream__ << "logit_theta" << '.' << j_1__ + 1;
                 param_names__.push_back(param_name_stream__.str());
             }
-            size_t logit_psi_j_1_max__ = nSites;
+            size_t logit_psi_j_1_max__ = n_sites;
             for (size_t j_1__ = 0; j_1__ < logit_psi_j_1_max__; ++j_1__) {
                 param_name_stream__.str(std::string());
                 param_name_stream__ << "logit_psi" << '.' << j_1__ + 1;
