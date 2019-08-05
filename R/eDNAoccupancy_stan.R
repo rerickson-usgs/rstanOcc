@@ -12,7 +12,7 @@
 #' @param n_p_coef number of p coefficients
 #' @param n_Theta_coef number of theta coefficients
 #' @param V_p matrix of p predictors
-#' @param W_p matrix of theta predictors
+#' @param W_theta matrix of theta predictors
 #' @param y vector of number of detections per sample
 #' @param a_obs vetor if detections occured within sample MTI
 #' @param k number of molecular replicates per sample
@@ -27,16 +27,16 @@
 eDNAoccupancy_stan <- 
     function(n_sites, n_Psi_coef, X_psi,
              n_samples, n_p_coef, n_Theta_coef,
-             V_p, W_p, y, a_obs, k,
+             V_p, W_theta, y, a_obs, k,
              start_index, end_index,
-             z_obs,  ...){
+             z_obs, n_samples_per_site,  ...){
 
         stan_data <- list(
             n_sites, n_Psi_coef, X_psi,
             n_samples, n_p_coef, n_Theta_coef,
-            V_p, W_p, y, a_obs, k,
+            V_p, W_theta, y, a_obs, k,
             start_index, end_index,
-            z_obs)
+            z_obs, n_samples_per_site)
 
         out <- rstan::sampling(stanmodels$eDNAoccupancy,
                                data = stan_data, ...)

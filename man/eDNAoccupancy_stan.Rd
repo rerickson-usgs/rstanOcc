@@ -5,7 +5,8 @@
 \title{Three-level occupancy model}
 \usage{
 eDNAoccupancy_stan(n_sites, n_Psi_coef, X_psi, n_samples, n_p_coef,
-  n_Theta_coef, V_p, W_p, y, a_obs, k, start_index, end_index, z_obs, ...)
+  n_Theta_coef, V_p, W_theta, y, a_obs, k, start_index, end_index, z_obs,
+  n_samples_per_site, ...)
 }
 \arguments{
 \item{n_sites}{Number of sites}
@@ -22,7 +23,7 @@ eDNAoccupancy_stan(n_sites, n_Psi_coef, X_psi, n_samples, n_p_coef,
 
 \item{V_p}{matrix of p predictors}
 
-\item{W_p}{matrix of theta predictors}
+\item{W_theta}{matrix of theta predictors}
 
 \item{y}{vector of number of detections per sample}
 
@@ -36,9 +37,9 @@ eDNAoccupancy_stan(n_sites, n_Psi_coef, X_psi, n_samples, n_p_coef,
 
 \item{z_obs}{vector for each site if any detections occured}
 
-\item{...}{Arguments passed to `rstan::sampling` (e.g. iter, chains).}
-
 \item{n_samples_per_site}{number of samples per each site}
+
+\item{...}{Arguments passed to `rstan::sampling` (e.g. iter, chains).}
 }
 \value{
 An object of class `stanfit` returned by `rstan::sampling`
