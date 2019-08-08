@@ -24,6 +24,8 @@ LinkingTo:
     Rcpp (>= 0.12.0),
     RcppEigen (>= 0.3.3.3.0),
     rstan (>= 2.18.1),
-    StanHeaders (>= 2.18.0)
+    StanHeaders (>= 2.18.0),
+    knitr,
+    testthat
 SystemRequirements: GNU make
 RoxygenNote: 6.1.1.9000
