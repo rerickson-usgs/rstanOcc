@@ -38,7 +38,7 @@ My plan of attack:
 
 This package may be installed using the `devlools` package:
 
-    install_github("rerickson-usgs/rstanOcc") 
+    devtools::install_github("rerickson-usgs/rstanOcc") 
 	
 	
 ## Contact
