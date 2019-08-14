@@ -34,6 +34,13 @@ My plan of attack:
 3. Do this in order because this will be easiest.
 4. Convert existing tutorials into vignettes for this project. 
 
+## Installing package
+
+This package may be installed using the `devlools` package:
+
+    install_github("rerickson-usgs/rstanOcc") 
+	
+	
 ## Contact
 
 Richard A. Erickson (rerickson@usgs.gov)
