@@ -15,7 +15,7 @@
 #' @param W_theta matrix of theta predictors
 #' @param y vector of number of detections per sample
 #' @param a_obs vetor if detections occured within sample MTI
-#' @param k number of molecular replicates per sample
+#' @param k vector of number of molecular replicates per sample
 #' @param start_index starting index for each site used MTI
 #' @param end_index ending index for each site used MTI
 #' @param z_obs vector for each site if any detections occured

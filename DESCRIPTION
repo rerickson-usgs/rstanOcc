@@ -26,6 +26,7 @@ LinkingTo:
     rstan (>= 2.18.1),
     StanHeaders (>= 2.18.0),
     knitr,
+    dplyr,
     testthat
 SystemRequirements: GNU make
 RoxygenNote: 6.1.1.9000
