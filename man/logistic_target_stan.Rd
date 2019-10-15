@@ -22,5 +22,14 @@ Stan code is written. Both this function and that function
 are included as teaching tools to build up towards occupancy models.
 }
 \examples{
-2+2 
+set.seed(12345)
+n_reps = 10000
+y <- rbinom(n = n_reps * 2, 1, c(0.25, 0.75))
+x <- rep(c(0, 1), times = n_reps)
+
+l_out <- logistic_target_stan(y, x)
+
+## show simulated data is almost the same as the recovered probs
+print(rstan::summary(l_out)$summary[ ,"mean"][1:2])
+print(aggregate(y, by = list(x), mean)$x)
 }

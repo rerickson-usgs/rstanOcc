@@ -29,7 +29,7 @@ eDNAoccupancy_stan(n_sites, n_Psi_coef, X_psi, n_samples, n_p_coef,
 
 \item{a_obs}{vetor if detections occured within sample MTI}
 
-\item{k}{number of molecular replicates per sample}
+\item{k}{vector of number of molecular replicates per sample}
 
 \item{start_index}{starting index for each site used MTI}
 

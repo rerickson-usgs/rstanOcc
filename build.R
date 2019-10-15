@@ -4,7 +4,6 @@ options(mc.cores = parallel::detectCores())
 ## args(rstan_create_package)
 ## rstan_create_package(path = "rstanOcc", rstudio=FALSE)
 
-setwd("./rstanOcc")
 ## list.files(all.files = TRUE)
 ## file.show("Read-and-delete-me")
 ## file.remove("Read-and-delete-me")
@@ -14,7 +13,7 @@ setwd("./rstanOcc")
 
 ## The next step creates documentation 
 
-file.remove("NAMESPACE")
+## file.remove("NAMESPACE")
 devtools::document()
 devtools::install(quick = TRUE)
 
